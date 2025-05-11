@@ -68,7 +68,8 @@ const TextArea: React.FC = () => {
       setIsParaphrasing(true);
       const { start, end, text: selectedText } = selection;
       
-      const reader = await paraphraseText(selectedText).then(stream => stream.getReader());
+      const stream = await paraphraseText(selectedText);
+      const reader = stream.getReader();
       
       let newText = '';
       let partialText = '';
