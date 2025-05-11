@@ -5,7 +5,7 @@ const ai = new GoogleGenerativeAI('AIzaSyC1fIyLMohJ2o0oGYmYblPoNwImI8k4aaI');
 
 export async function paraphraseText(input: string): Promise<ReadableStream<string>> {
   const model = ai.getGenerativeModel({
-    model: 'gemini-2.5-pro-preview-05-06',
+    model: 'gemini-1.5-pro', // Using a supported model
   });
 
   const prompt = `Paraphrase this text to maintain the original meaning but use different wording. Keep the tone and style similar: ${input}`;
