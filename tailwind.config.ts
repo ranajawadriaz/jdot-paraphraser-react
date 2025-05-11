@@ -68,6 +68,8 @@ export default {
 					primary: '#3B82F6',
 					hover: '#2563EB',
 					text: '#1E3A8A',
+					accent: '#DBEAFE',
+					border: '#BFDBFE'
 				}
 			},
 			borderRadius: {

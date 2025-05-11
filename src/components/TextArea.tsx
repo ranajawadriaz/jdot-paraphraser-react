@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import FloatingButton from './FloatingButton';
 import { paraphraseText } from '../services/paraphraserService';
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
+import { Loader } from "lucide-react";
 
 const DEFAULT_TEXT = `Artificial intelligence is the simulation of human intelligence processes by machines, especially computer systems. These processes include learning (the acquisition of information and rules for using the information), reasoning (using rules to reach approximate or definite conclusions) and self-correction.
 
@@ -66,6 +68,11 @@ const TextArea: React.FC = () => {
     
     try {
       setIsParaphrasing(true);
+      toast({
+        title: "Processing",
+        description: "AI is paraphrasing your text...",
+      });
+      
       const { start, end, text: selectedText } = selection;
       
       const stream = await paraphraseText(selectedText);
@@ -86,6 +93,10 @@ const TextArea: React.FC = () => {
             setText(newText + partialText + text.slice(end));
             setIsParaphrasing(false);
             setSelection(null);
+            toast({
+              title: "Success",
+              description: "Your text has been paraphrased!",
+            });
             return;
           }
           
@@ -121,15 +132,32 @@ const TextArea: React.FC = () => {
 
   return (
     <div className="relative">
-      <div 
-        ref={textRef}
-        className="p-6 bg-white rounded-lg shadow-sm border border-gray-200 min-h-[400px] max-w-4xl mx-auto whitespace-pre-wrap"
-        contentEditable={!isParaphrasing}
-        suppressContentEditableWarning={true}
-        onInput={(e) => setText(e.currentTarget.textContent || '')}
-      >
-        {text}
-      </div>
+      <Card className="border-2 border-gray-200 shadow-lg">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between bg-gray-50 p-3 border-b border-gray-200 rounded-t-lg">
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 rounded-full bg-red-400"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div className="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+            {isParaphrasing && (
+              <div className="flex items-center text-sm text-paraphraser-text">
+                <Loader className="animate-spin h-4 w-4 mr-1"/> 
+                Paraphrasing...
+              </div>
+            )}
+          </div>
+          <div 
+            ref={textRef}
+            className="p-6 min-h-[400px] max-w-4xl mx-auto whitespace-pre-wrap font-sans text-lg text-gray-800 focus:outline-none"
+            contentEditable={!isParaphrasing}
+            suppressContentEditableWarning={true}
+            onInput={(e) => setText(e.currentTarget.textContent || '')}
+          >
+            {text}
+          </div>
+        </CardContent>
+      </Card>
       
       {selection && selection.rect && !isParaphrasing && (
         <FloatingButton 
