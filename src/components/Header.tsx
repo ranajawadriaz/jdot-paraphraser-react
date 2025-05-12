@@ -9,10 +9,10 @@ const Header: React.FC = () => {
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-paraphraser-text flex items-center gap-2">
             <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-paraphraser-primary" /> 
-            Jawad Gen Paraphraser
+            Jdot Paraphraser
           </h1>
           <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1">
-            Select any text to paraphrase it with AI in seconds
+            Paste and Select any text to paraphrase it with AI in seconds
           </p>
         </div>
       </div>

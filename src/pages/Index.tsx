@@ -19,7 +19,7 @@ const Index: React.FC = () => {
               <ul className="space-y-1 sm:space-y-2">
                 <li className="flex items-center text-xs sm:text-sm md:text-base text-gray-700">
                   <span className="inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 text-xs font-semibold text-white bg-paraphraser-primary rounded-full">1</span>
-                  Select any text in the editor below
+                  Paste and Select any text in the editor below
                 </li>
                 <li className="flex items-center text-xs sm:text-sm md:text-base text-gray-700">
                   <span className="inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 text-xs font-semibold text-white bg-paraphraser-primary rounded-full">2</span>
@@ -45,7 +45,7 @@ const Index: React.FC = () => {
         <div className="text-center text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6 md:mt-8 max-w-4xl mx-auto py-3 sm:py-4">
           <div className="flex items-center justify-center gap-1">
             <span>Powered by</span>
-            <span className="font-semibold">Jawad Gen Model</span>
+            <span className="font-semibold">Jdot Gen Model</span>
           </div>
         </div>
       </main>

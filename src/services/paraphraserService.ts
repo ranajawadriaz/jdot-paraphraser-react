@@ -2,7 +2,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Initialize the API with your key
-const ai = new GoogleGenerativeAI('AIzaSyC1fIyLMohJ2o0oGYmYblPoNwImI8k4aaI');
+const apiKey = import.meta.env.VITE_API_KEY;
+const ai = new GoogleGenerativeAI(apiKey);
 
 export async function paraphraseText(input: string): Promise<string> {
   try {
