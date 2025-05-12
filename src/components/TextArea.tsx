@@ -143,10 +143,9 @@ const TextArea: React.FC = () => {
     handleParaphrase();
   };
 
-  // Fixed the text input handling
+  // Fixed the text input handling to prevent reversed text
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const newText = e.currentTarget.textContent || '';
-    setText(newText);
+    setText(e.currentTarget.textContent || '');
   };
 
   return (
@@ -173,10 +172,8 @@ const TextArea: React.FC = () => {
             suppressContentEditableWarning={true}
             onInput={handleInput}
             data-placeholder="Paste your text here to paraphrase"
-            style={{ minHeight: '200px' }}
-          >
-            {text}
-          </div>
+            style={{ lineHeight: "1.6" }}
+          ></div>
         </CardContent>
       </Card>
       
