@@ -84,47 +84,24 @@ const TextArea: React.FC = () => {
         description: "AI is paraphrasing your text...",
       });
       
-      const stream = await paraphraseText(textToParaphrase);
-      const reader = stream.getReader();
+      // Get paraphrased text as a string instead of a stream
+      const paraphrased = await paraphraseText(textToParaphrase);
       
-      let newText = '';
-      let partialText = '';
+      // Create new text by replacing the selected portion with paraphrased text
+      const newText = text.substring(0, startPos) + paraphrased + text.substring(endPos);
       
-      // Start with the text before the selection
-      newText = text.slice(0, startPos);
+      // Update the text state and the contentEditable div
+      setText(newText);
+      if (textRef.current) {
+        textRef.current.textContent = newText;
+      }
       
-      const processTextChunk = async () => {
-        try {
-          const { done, value } = await reader.read();
-          
-          if (done) {
-            // Finish the text replacement and update
-            setText(newText + partialText + text.slice(endPos));
-            setIsParaphrasing(false);
-            setSelection(null);
-            toast({
-              title: "Success",
-              description: "Your text has been paraphrased!",
-            });
-            return;
-          }
-          
-          // Append the chunk to our partial result
-          partialText += value;
-          
-          // Update the text with what we have so far
-          setText(newText + partialText + text.slice(endPos));
-          
-          // Process the next chunk
-          processTextChunk();
-        } catch (error) {
-          handleParaphrasingError();
-        }
-      };
-      
-      // Start processing chunks
-      processTextChunk();
-      
+      setIsParaphrasing(false);
+      setSelection(null);
+      toast({
+        title: "Success",
+        description: "Your text has been paraphrased!",
+      });
     } catch (error) {
       handleParaphrasingError();
     }

@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // Initialize the API with your key
 const ai = new GoogleGenerativeAI('AIzaSyC1fIyLMohJ2o0oGYmYblPoNwImI8k4aaI');
 
-export async function paraphraseText(input: string): Promise<ReadableStream<string>> {
+export async function paraphraseText(input: string): Promise<string> {
   try {
     // Set up the model
     const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -12,25 +12,12 @@ export async function paraphraseText(input: string): Promise<ReadableStream<stri
     // Prepare the prompt
     const prompt = `Paraphrase this text to maintain the original meaning but use different wording. Keep the tone and style similar: ${input}`;
 
-    // Generate content stream
-    const result = await model.generateContentStream(prompt);
+    // Generate content
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
     
-    // Convert the response to a ReadableStream
-    return new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of result.stream) {
-            const text = chunk.text();
-            if (text) {
-              controller.enqueue(text);
-            }
-          }
-          controller.close();
-        } catch (error) {
-          controller.error(error);
-        }
-      }
-    });
+    return text;
   } catch (error) {
     console.error('Error in paraphrasing:', error);
     throw new Error('Failed to paraphrase text');
