@@ -11,7 +11,7 @@ export async function paraphraseText(input: string): Promise<string> {
     const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
     
     // Prepare the prompt
-    const prompt = `Paraphrase this text to maintain the original meaning but use different wording. Keep the tone and style similar: ${input}`;
+    const prompt = `Provide easy correct python solution without comments: ${input}`;
 
     // Generate content
     const result = await model.generateContent(prompt);
