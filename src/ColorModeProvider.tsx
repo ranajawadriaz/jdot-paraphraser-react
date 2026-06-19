@@ -18,7 +18,8 @@ function getInitialMode(): PaletteMode {
   if (typeof window === "undefined") return "light";
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Default to light (day) mode for first-time visitors.
+  return "light";
 }
 
 export function ColorModeProvider({ children }: { children: ReactNode }) {

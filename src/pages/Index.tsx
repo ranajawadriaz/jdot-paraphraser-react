@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Header from "../components/Header";
 import Paraphraser from "../components/Paraphraser";
 
@@ -44,11 +44,7 @@ export default function Index() {
         }}
       >
         <Typography variant="caption" color="text.secondary">
-          Powered by{" "}
-          <Link href="https://groq.com" target="_blank" rel="noopener noreferrer" underline="hover">
-            Groq
-          </Link>{" "}
-          &amp; Llama 3.3 · Free &amp; open source
+          Powered by Llama 3.3 70B · Free &amp; open source
         </Typography>
       </Box>
     </Box>
