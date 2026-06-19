@@ -1,23 +1,102 @@
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
+import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
+import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { useColorMode } from "../ColorModeProvider";
+import { SITE, whatsappUrl } from "../config";
 
-import React from 'react';
-import { Sparkles } from "lucide-react";
+export default function Header() {
+  const theme = useTheme();
+  const { mode, toggleMode } = useColorMode();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-const Header: React.FC = () => {
   return (
-    <header className="w-full py-4 sm:py-6 md:py-8 border-b border-gray-200 bg-gradient-to-r from-paraphraser-light to-white">
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 flex items-center">
-        <div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-paraphraser-text flex items-center gap-2">
-            <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-paraphraser-primary" /> 
-            Jdot Paraphraser
-          </h1>
-          <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1">
-            Paste and Select any text to paraphrase it with AI in seconds
-          </p>
-        </div>
-      </div>
-    </header>
-  );
-};
+    <AppBar
+      position="static"
+      color="default"
+      elevation={0}
+      sx={{
+        bgcolor: "background.paper",
+        borderBottom: 1,
+        borderColor: "divider",
+      }}
+    >
+      <Toolbar sx={{ gap: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 36,
+            height: 36,
+            borderRadius: 2,
+            mr: 1.5,
+            color: "common.white",
+            background: (t) =>
+              `linear-gradient(135deg, ${t.palette.primary.main}, ${t.palette.secondary.main})`,
+          }}
+        >
+          <AutoFixHighRoundedIcon fontSize="small" />
+        </Box>
 
-export default Header;
+        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+          <Typography variant="h6" noWrap sx={{ lineHeight: 1.1 }}>
+            {SITE.name}
+          </Typography>
+          {!isMobile && (
+            <Typography variant="caption" color="text.secondary" noWrap>
+              {SITE.tagline}
+            </Typography>
+          )}
+        </Box>
+
+        <Tooltip title={mode === "light" ? "Dark mode" : "Light mode"}>
+          <IconButton onClick={toggleMode} color="inherit" aria-label="Toggle color mode">
+            {mode === "light" ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
+          </IconButton>
+        </Tooltip>
+
+        {isMobile ? (
+          <Tooltip title="Contact on WhatsApp">
+            <IconButton
+              component="a"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ color: "#25D366" }}
+              aria-label="Contact on WhatsApp"
+            >
+              <WhatsAppIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Button
+            component="a"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="contained"
+            startIcon={<WhatsAppIcon />}
+            sx={{
+              bgcolor: "#25D366",
+              "&:hover": { bgcolor: "#1da851" },
+            }}
+          >
+            Contact
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
+}

@@ -1,27 +1,30 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
-const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
+export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
-      </div>
-    </div>
+    <Box
+      sx={{
+        height: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        gap: 2,
+        px: 3,
+        bgcolor: "background.default",
+      }}
+    >
+      <Typography variant="h1" sx={{ fontSize: { xs: "4rem", sm: "6rem" } }}>
+        404
+      </Typography>
+      <Typography variant="h6" color="text.secondary">
+        This page could not be found.
+      </Typography>
+      <Button component={RouterLink} to="/" variant="contained" size="large">
+        Back to Paraphraser
+      </Button>
+    </Box>
   );
-};
-
-export default NotFound;
+}

@@ -1,74 +1,82 @@
-Welcome to your project
-Project info
-URL: https://jawad-paraphraser.vercel.app/
+# Jdot Paraphraser
 
-How can I edit this code?
-There are several ways to edit your application:
+A fast, free, open-source paraphrasing tool. Paste any text, pick a writing style, and get a rewrite that keeps the original meaning. Powered by [Groq](https://groq.com) and Llama 3.3.
 
-Use your preferred IDE
+![Tech](https://img.shields.io/badge/Vite-React-blue) ![UI](https://img.shields.io/badge/UI-Material%20UI-007FFF) ![License](https://img.shields.io/badge/license-MIT-green)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes.
+## Features
 
-The only requirement is having Node.js & npm installed - install with nvm
+- ✍️ Rewrite text in six styles: Standard, Fluent, Formal, Academic, Simple, Creative
+- 🌗 Light & dark mode
+- 📋 One-click copy, word & character counts
+- 📱 Fully responsive — no awkward page scroll, text scrolls inside the editors
+- 🔒 API key stays on the server — safe to deploy and open source
 
-Follow these steps:
+## Tech stack
 
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- [Vite](https://vitejs.dev/) + [React](https://react.dev/) + TypeScript
+- [Material UI](https://mui.com/) (Emotion)
+- [Groq SDK](https://github.com/groq/groq-typescript) (`llama-3.3-70b-versatile`)
+- A serverless function (`api/paraphrase.ts`) that keeps your API key secret
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## How it works
 
-# Step 3: Install the necessary dependencies.
-npm i
+The browser never sees your Groq API key. The frontend calls a small backend
+endpoint (`/api/paraphrase`), which runs server-side and talks to Groq using
+`GROQ_API_KEY`. In production this is a Vercel Serverless Function; during local
+development the same handler is served by a small Vite middleware, so
+`npm run dev` works end to end.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## Getting started
+
+Requires [Node.js](https://nodejs.org/) 18+.
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Add your Groq API key (get one free at https://console.groq.com/keys)
+cp .env.example .env
+# then edit .env and set GROQ_API_KEY=...
+
+# 3. Start the dev server
 npm run dev
-Edit a file directly in GitHub
+```
 
-Navigate to the desired file(s).
+Open http://localhost:8080.
 
-Click the "Edit" button (pencil icon) at the top right of the file view.
+## Deploying to Vercel
 
-Make your changes and commit the changes.
+1. Push this repo to GitHub and import it into [Vercel](https://vercel.com/). It is
+   auto-detected as a Vite app — no build settings to change.
+2. In your Vercel project, go to **Settings → Environment Variables** and add:
+   - **Key:** `GROQ_API_KEY`
+   - **Value:** your Groq API key
+   - **Environments:** Production, Preview, Development
+3. Click **Save**, then **Deploy** (or redeploy if it already deployed).
 
-Use GitHub Codespaces
+Because the key is read only inside `api/paraphrase.ts` on the server, it is never
+included in the public JavaScript bundle.
 
-Navigate to the main page of your repository.
+## Scripts
 
-Click on the "Code" button (green button) near the top right.
+| Command           | Description                         |
+| ----------------- | ----------------------------------- |
+| `npm run dev`     | Start the local dev server          |
+| `npm run build`   | Build for production                |
+| `npm run preview` | Preview the production build        |
+| `npm run lint`    | Run ESLint                          |
 
-Select the "Codespaces" tab.
+## Project structure
 
-Click on "New codespace" to launch a new Codespace environment.
+```
+api/paraphrase.ts        Serverless endpoint that calls Groq (key stays server-side)
+src/components/          Header + Paraphraser UI
+src/pages/              Index (app) and NotFound
+src/services/           Frontend client for /api/paraphrase
+src/theme.ts            Material UI light/dark theme
+```
 
-Edit files directly within the Codespace and commit and push your changes once you're done.
+## License
 
-What technologies are used for this project?
-This project is built with:
-
-Vite
-
-TypeScript
-
-React
-
-shadcn-ui
-
-Tailwind CSS
-
-How can I deploy this project?
-You can use your preferred deployment platform. For example:
-
-Vercel
-
-Netlify
-
-GitHub Pages
-
-Custom hosting solution
-
-Can I connect a custom domain?
-Yes, you can!
-
-To connect a domain, refer to your deployment provider’s documentation for custom domain setup.
+[MIT](LICENSE) — free to use, modify, and share.
